@@ -146,6 +146,35 @@ tests['arc() 2'] = function (ctx) {
   }
 }
 
+tests['arc()() #1736'] = function (ctx) {
+	let center_x = 512;
+	let center_y = 512;
+	let start_angle = 6.283185307179586 ; // exactly 2pi
+	let end_angle = 7.5398223686155035;
+	let inner_radius = 359.67999999999995;
+	let outer_radius = 368.64;
+  
+	ctx.scale(0.2, 0.2);
+  
+	ctx.beginPath();
+	ctx.moveTo(center_x + Math.cos(start_angle) * inner_radius, center_y + Math.sin(start_angle) * inner_radius);
+	ctx.lineTo(center_x + Math.cos(start_angle) * outer_radius, center_y + Math.sin(start_angle) * outer_radius);
+	ctx.arc(center_x, center_y, outer_radius, start_angle, end_angle, false);
+	ctx.lineTo(center_x + Math.cos(end_angle) * inner_radius, center_y + Math.sin(end_angle) * inner_radius);
+	ctx.arc(center_x, center_y, inner_radius, end_angle, start_angle, true);
+	ctx.closePath();
+	ctx.stroke();
+}
+
+tests['arc()() #1808'] = function (ctx) {
+  ctx.scale(0.5, 0.5);
+  ctx.beginPath();
+  ctx.arc(256,256, 50, 0, 2 * Math.PI, true );
+  ctx.arc(256,256, 25, 0, 2 * Math.PI, false);
+  ctx.closePath();
+  ctx.fill();
+}
+
 tests['arcTo()'] = function (ctx) {
   ctx.fillStyle = '#08C8EE'
   ctx.translate(-50, -50)
