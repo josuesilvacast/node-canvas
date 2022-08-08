@@ -36,7 +36,7 @@ empty_closure_output_buffer(j_compress_ptr cinfo){
   };
   dest->closure->cb.Call(sizeof argv / sizeof *argv, argv, &async);
 
-  dest->buffer = (JOCTET *)malloc(dest->bufsize);
+  dest->buffer = (JOCTET *)calloc(dest->bufsize, sizeof(int));
   cinfo->dest->next_output_byte = dest->buffer;
   cinfo->dest->free_in_buffer = dest->bufsize;
   return true;
@@ -86,7 +86,7 @@ jpeg_closure_dest(j_compress_ptr cinfo, JpegClosure* closure, int bufsize){
 
   dest->closure = closure;
   dest->bufsize = bufsize;
-  dest->buffer = (JOCTET *)malloc(bufsize);
+  dest->buffer = (JOCTET *)calloc(bufsize, sizeof(int));
 
   cinfo->dest->next_output_byte = dest->buffer;
   cinfo->dest->free_in_buffer = dest->bufsize;
@@ -112,7 +112,7 @@ void encode_jpeg(jpeg_compress_struct cinfo, cairo_surface_t *surface, int quali
   unsigned char *dst;
   unsigned int *src = (unsigned int *)cairo_image_surface_get_data(surface);
   int sl = 0;
-  dst = (unsigned char *)malloc(w * 3);
+  dst = (unsigned char *)calloc(w * 3, sizeof(int));
   while (sl < h) {
     unsigned char *dp = dst;
     int x = 0;

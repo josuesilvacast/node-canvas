@@ -578,7 +578,7 @@ Image::loadGIF(FILE *stream) {
     return CAIRO_STATUS_READ_ERROR;
   }
 
-  uint8_t *buf = (uint8_t *) malloc(s.st_size);
+  uint8_t *buf = (uint8_t *) calloc(s.st_size, sizeof(int));
 
   if (!buf) {
     fclose(stream);
@@ -992,13 +992,13 @@ clearMimeData(void *closure) {
 
 cairo_status_t
 Image::assignDataAsMime(uint8_t *data, int len, const char *mime_type) {
-  uint8_t *mime_data = (uint8_t *) malloc(len);
+  uint8_t *mime_data = (uint8_t *) calloc(len, sizeof(int));
   if (!mime_data) {
     this->errorInfo.set(NULL, "malloc", errno);
     return CAIRO_STATUS_NO_MEMORY;
   }
 
-  read_closure_t *mime_closure = (read_closure_t *) malloc(sizeof(read_closure_t));
+  read_closure_t *mime_closure = (read_closure_t *) calloc(sizeof(read_closure_t), sizeof(int));
   if (!mime_closure) {
     free(mime_data);
     this->errorInfo.set(NULL, "malloc", errno);
@@ -1111,7 +1111,7 @@ Image::loadJPEG(FILE *stream) {
     len = ftell(stream);
     fseek(stream, 0, SEEK_SET);
 
-    buf = (uint8_t *) malloc(len);
+    buf = (uint8_t *) calloc(len, sizeof(int));
     if (!buf) {
       this->errorInfo.set(NULL, "malloc", errno);
       return CAIRO_STATUS_NO_MEMORY;
@@ -1232,7 +1232,7 @@ Image::loadSVG(FILE *stream) {
     return CAIRO_STATUS_READ_ERROR;
   }
 
-  uint8_t *buf = (uint8_t *) malloc(s.st_size);
+  uint8_t *buf = (uint8_t *) calloc(s.st_size, sizeof(int));
 
   if (!buf) {
     fclose(stream);

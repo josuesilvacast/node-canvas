@@ -175,7 +175,7 @@ Context2d::Context2d(Canvas *canvas) {
   _canvas = canvas;
   _context = canvas->createCairoContext();
   _layout = pango_cairo_create_layout(_context);
-  state = states[stateno = 0] = (canvas_state_t *) malloc(sizeof(canvas_state_t));
+  state = states[stateno = 0] = (canvas_state_t *) calloc(sizeof(canvas_state_t), sizeof(int));
 
   resetState(true);
 }
@@ -243,7 +243,7 @@ void
 Context2d::save() {
   if (stateno < CANVAS_MAX_STATES) {
     cairo_save(_context);
-    states[++stateno] = (canvas_state_t *) malloc(sizeof(canvas_state_t));
+    states[++stateno] = (canvas_state_t *) calloc(sizeof(canvas_state_t), sizeof(int));
     memcpy(states[stateno], state, sizeof(canvas_state_t));
     states[stateno]->fontDescription = pango_font_description_copy(states[stateno-1]->fontDescription);
     state = states[stateno];
@@ -640,7 +640,7 @@ Context2d::blur(cairo_surface_t *surface, int radius) {
   int width = cairo_image_surface_get_width( surface );
   int height = cairo_image_surface_get_height( surface );
   unsigned* precalc =
-      (unsigned*)malloc(width*height*sizeof(unsigned));
+      (unsigned*)calloc(width*height*sizeof(unsigned), sizeof(int));
   cairo_surface_flush( surface );
   unsigned char* src = cairo_image_surface_get_data( surface );
   double mul=1.f/((radius*2)*(radius*2));

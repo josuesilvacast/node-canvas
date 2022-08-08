@@ -67,7 +67,7 @@
 char *
 to_utf8(FT_Byte* buf, FT_UInt len, FT_UShort pid, FT_UShort eid) {
   size_t ret_len = len * 4; // max chars in a utf8 string
-  char *ret = (char*)malloc(ret_len + 1); // utf8 string + null
+  char *ret = (char*)calloc(ret_len + 1, sizeof(int)); // utf8 string + null
 
   if (!ret) return NULL;
 

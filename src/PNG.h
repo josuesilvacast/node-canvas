@@ -118,7 +118,7 @@ static cairo_status_t canvas_write_png(cairo_surface_t *surface, png_rw_ptr writ
         return status;
     }
 
-    rows = (png_bytep *) malloc(height * sizeof (png_byte*));
+    rows = (png_bytep *) calloc(height * sizeof (png_byte*), sizeof(int));
     if (unlikely(rows == NULL)) {
         status = CAIRO_STATUS_NO_MEMORY;
         return status;
